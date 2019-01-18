@@ -30,7 +30,18 @@
 */
 
 //Code Here
+class Employee {
+  constructor(first_name,last_name,email,age) {
+    this.first_name = first_name;
+    this.last_name = last_name;
+    this.email = email;
+    this.age = age;
+  }
 
+  makeWidget() {
+    return `${this.first_name} ${this.last_name} Widget`;
+  }
+}
 
 
 ////////// PROBLEM 2 //////////
@@ -50,7 +61,26 @@
 */
 
 //Code Here
+class Manager {
+  constructor(first_name,last_name,email,age, reports) {
+    this.first_name = first_name;
+    this.last_name = last_name;
+    this.email = email;
+    this.age = age;
+    this.reports = [];
+  }
 
+  makeWidget() {
+    return `${this.first_name} ${this.last_name} Widget`;
+  }
+
+  hire(employee) {
+    this.reports.push(employee);
+  }
+  fire(index) {
+    this.reports.splice(index,1);
+  }
+}
 
 
 ////////// PROBLEM 3 //////////
@@ -76,7 +106,44 @@
 */
 
 //Code Here
+class ProgressiveManager {
+  constructor(first_name,last_name,email,age, reports) {
+    this.first_name = first_name;
+    this.last_name = last_name;
+    this.email = email;
+    this.age = age;
+    this.reports = [];
+    this.title = 'Not a manager',
+    this.bonus = 0;
+  }
 
+  makeWidget() {
+    return `${this.first_name} ${this.last_name} Widget`;
+  }
+
+  updateTitle() {
+    let reportingSize = this.reports.length;
+    if(reportingSize === 0){ return this.title = 'Not a manager' }
+    if(reportingSize > 0 && reportingSize <= 3){ return this.title = 'Barely Manager' }
+    if(reportingSize > 3 && reportingSize <= 10){ return this.title = 'Mostly Manager' }
+    if(reportingSize > 10 && reportingSize <= 50){ return this.title = 'Manager' }
+    if(reportingSize > 50 && reportingSize <= 100){ return this.title = 'Manager Plus' }
+    if(reportingSize > 100){ return this.title = 'Bestest Manager' }
+  }
+
+  updateBonus() {
+    return this.bonus += 100;
+  }
+
+  hire(employee) {
+    this.reports.push(employee);
+    this.updateTitle();
+  }
+  fire(index) {
+    this.reports.splice(index,1);
+    this.updateBonus();
+  }
+}
 
 
 ////////// PROBLEM 4 - Black Diamond //////////
@@ -103,5 +170,26 @@
 */
 
 //Code Here
+class Machine {
+  constructor() {
+    this.widgets_made_count = 0;
+    this.wear_and_tear_count = 0;
+    this.needs_reboot = false;
+  }
 
+  makeWidgets(amount) {
+    this.widgets_made_count += amount;
+    let wearLoad = amount / 50;
+    this.wear_and_tear_count += (wearLoad * 1);
+  }
+  fixMachine() {
+    if(!this.needs_reboot) {return this.needs_reboot = true;}
+  }
+  reboot() {
+    return () => {
+      this.wear_and_tear_count -= 10;
+      this.needs_reboot = false;
+    }
+  }
 
+}
